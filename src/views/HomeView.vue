@@ -1,15 +1,16 @@
 <template>
-  <hello-world />
+  <log-in />
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld'
+  import LogIn from '../components/LogIn'
 
   export default {
     name: 'HomeView',
 
     components: {
-      HelloWorld,
+      LogIn,
     },
   }
 </script>
+
