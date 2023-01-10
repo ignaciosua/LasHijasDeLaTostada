@@ -11,7 +11,7 @@
         <v-select 
           v-model="selectedOption"
           @change="handleCreateUserButton(selectedOption)"
-          :items="items"
+          :items="createUserOptions"
           label="Add users"
           dense
           outlined
@@ -24,7 +24,7 @@
           ></convert-excel-to-json>
         </v-dialog>
 
-        <v-dialog v-model="showCreateUserForm">
+        <v-dialog v-model="showCreateUserForm" width="500">
           <create-user-form></create-user-form>
         </v-dialog>
       </v-col>
@@ -49,7 +49,7 @@
         selectedOption: "",
         dialogOpen: false,
         showCreateUserForm: false,
-        items: ['Create User', 'Upload from excel'],
+        createUserOptions: ['Create User', 'Upload from excel'],
         headers: [
           {
             text: 'Nombre',

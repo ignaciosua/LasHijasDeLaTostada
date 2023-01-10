@@ -19,7 +19,7 @@
       <v-spacer></v-spacer>
       <v-btn
         color="primary"
-        @click="convertExcelToJson">Convertir a JSON
+        @click="convertExcelToJson">Upload
       </v-btn>
     </v-card-actions>
   </v-card>

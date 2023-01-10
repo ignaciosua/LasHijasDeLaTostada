@@ -13,7 +13,7 @@
       ></v-text-field>
 
       <v-text-field
-        :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
         v-model="password"
         :rules="passwordRules"
         :type="show ? 'text' : 'password'"
