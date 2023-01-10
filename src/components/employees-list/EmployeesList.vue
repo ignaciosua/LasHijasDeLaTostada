@@ -1,6 +1,34 @@
 <template>
   <v-container>
-    <h1>Employees</h1>
+    <v-row>
+      <v-col md="4">
+        <h1>Employees</h1>
+      </v-col>
+      <v-col
+        md="2"
+        class="ml-auto"
+      >
+        <v-select 
+          v-model="selectedOption"
+          @change="handleCreateUserButton(selectedOption)"
+          :items="items"
+          label="Add users"
+          dense
+          outlined
+        ></v-select>
+
+        <v-dialog v-model="dialogOpen" width="500">
+          <convert-excel-to-json
+            @close-dialog="closeDialog"
+            @custom-event="getJSONFromExcel"
+          ></convert-excel-to-json>
+        </v-dialog>
+
+        <v-dialog v-model="showCreateUserForm">
+          <create-user-form></create-user-form>
+        </v-dialog>
+      </v-col>
+    </v-row>
 
     <v-data-table
       :headers="headers"
@@ -12,80 +40,16 @@
 </template>
 
 <script>
-  const tempUser = [{
-    nombre: 'Roberto',
-    paterno: 'Vallin',
-    materno: 'Ramos',
-    area: 'Cocina',
-    puesto: 'Cocinero',
-    sucursal: 'Calle 38',
-    nss: '123456789',
-    rfc: '123456789',
-    curp: '13456789',
-    fechaDeNacimiento: '07-feb-96',
-    sueldoDiarioSs: '266.66',
-    sueldoDiario: '266.67',
-    sueldoQuincenal: '4000',
-    sueldoMensual: '8000',
-    fechaDeIngreso: '29-marz-21',
-    banco: 'Santander',
-    cuenta: '123456789',
-    formaDePago: 'Santander',
-    numeroDeCuenta: '123456789',
-    estadoCivil: 'Soltero',
-    numeroDeTelefono: '13456789',
-    correoElectronico: 'roberto@hotmail.com',
-  }, {
-    nombre: 'Nacho',
-    paterno: 'Suarez',
-    materno: 'Ramos',
-    area: 'Cocina',
-    puesto: 'Cocinero',
-    sucursal: 'Calle 38',
-    nss: '123456789',
-    rfc: '123456789',
-    curp: '13456789',
-    fechaDeNacimiento: '07-feb-96',
-    sueldoDiarioSs: '266.66',
-    sueldoDiario: '266.67',
-    sueldoQuincenal: '4000',
-    sueldoMensual: '8000',
-    fechaDeIngreso: '29-marz-21',
-    banco: 'Santander',
-    cuenta: '123456789',
-    formaDePago: 'Santander',
-    numeroDeCuenta: '123456789',
-    estadoCivil: 'Soltero',
-    numeroDeTelefono: '13456789',
-    correoElectronico: 'roberto@hotmail.com',
-  }, {
-    nombre: 'Christian',
-    paterno: 'Pesqueira',
-    materno: 'Ramos',
-    area: 'Cocina',
-    puesto: 'Cocinero',
-    sucursal: 'Calle 38',
-    nss: '123456789',
-    rfc: '123456789',
-    curp: '13456789',
-    fechaDeNacimiento: '07-feb-96',
-    sueldoDiarioSs: '266.66',
-    sueldoDiario: '266.67',
-    sueldoQuincenal: '4000',
-    sueldoMensual: '8000',
-    fechaDeIngreso: '29-marz-21',
-    banco: 'Santander',
-    cuenta: '123456789',
-    formaDePago: 'Santander',
-    numeroDeCuenta: '123456789',
-    estadoCivil: 'Soltero',
-    numeroDeTelefono: '13456789',
-    correoElectronico: 'roberto@hotmail.com',
-  }]
-
+  import ConvertExcelToJson from './ConvertExcelToJson.vue';
+  import CreateUserForm from './CreateUserForm.vue';
   export default {
     data () {
       return {
+        tempUser: [],
+        selectedOption: "",
+        dialogOpen: false,
+        showCreateUserForm: false,
+        items: ['Create User', 'Upload from excel'],
         headers: [
           {
             text: 'Nombre',
@@ -115,8 +79,31 @@
           { text: 'Numero de teléfono', value: 'numeroDeTelefono' },
           { text: 'Correo electrónico', value: 'correoElectronico' }
         ],
-        users: tempUser
+        users: this.tempUser
       }
     },
+    methods: {
+      handleCreateUserButton(option) {
+        if (option === "Upload from excel") {
+         return this.dialogOpen = true;
+        }
+
+        if (option === "Create User") {
+          return this.showCreateUserForm = true;
+        }
+      },
+      closeDialog() {
+        this.dialogOpen = false;
+      },
+      getJSONFromExcel(jsonData) {
+        console.log(jsonData)
+        this.tempUser = jsonData;
+      }
+    },
+    components: {
+      ConvertExcelToJson,
+      CreateUserForm
+    }
   }
+
 </script>
