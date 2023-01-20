@@ -14,14 +14,18 @@
               <v-col
                 cols="12"
                 sm="6"
-                v-for="field in informationFields"
-                :key="field"
+                v-for="field, index in informationFields"
+                :key="index"
               >
                 <v-text-field
                   :value="field.value"
                   :label="field.label"
+                  @blur="() => editField(field.value)"
+                  v-model="field.value"
+                  v-on:focus="removeReadOnly(field.value)" 
                   filled
-                  readonly
+                  :readonly="isReadOnly"
+                  dense
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -33,9 +37,12 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
+      isReadOnly: true,
+      focusedInput: '',
       informationFields: {
         name: {
           value: 'John',
@@ -128,6 +135,27 @@ export default {
       }
     }
   },
-  methods: {}
+  methods: {
+    editField(value) {
+      console.log('this is the new value: ', value)
+    },
+    removeReadOnly(input) {
+      console.log(this.focusedInput, input)
+      if (this.focusedInput === input) return;
+      this.focusedInput = input;
+      this.isReadOnly = false;
+    }
+  },
+  mounted() {
+    console.log(this.$route.params.id);
+    axios.get(`http://localhost:12345/getEmployee/${this.$route.params.id}`)
+      .then(response => {
+        console.log(response.data);
+        this.tempUser = response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },
 }
 </script>

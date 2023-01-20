@@ -1,0 +1,102 @@
+###
+GET http://localhost:12345/getEmployee/63c9c6a70548b4af9a5edf12
+
+
+###*
+POST http://localhost:12345/updateEmployee
+Content-Type: application/json
+
+ {
+    "_id": "63c7380c87759ea59d0f7ef1",
+    "nombre": "MAriano",
+    "paterno": "Doe",
+    "materno": "Smith",
+    "area": "IT",
+    "puesto": "Developer",
+    "sucursal": "New York",
+    "nss": "123456789",
+    "rfc": "ABCD123456",
+    "curp": "ABCD123456",
+    "fechadenacimiento": "1990-01-01",
+    "sueldodiarioss": 100.50,
+    "sueldodiario": 150.50,
+    "sueldoquincenal": 3000.00,
+    "sueldomensual": 6000.00,
+    "fechadeingreso": "2020-01-01",
+    "banco": "Banco de México",
+    "cuenta": "checking",
+    "formadepago": "efectivo",
+    "numerodecuenta": "123456789",
+    "estadocivil": "soltero",
+    "numerodetelefono": "555-555-5555",
+    "correoelectronico": "johndoe@example.com"
+}
+
+###
+POST http://localhost:12345/deleteEmployee
+Content-Type: application/json
+
+{
+    "_id": "63c61e8fe94a14df92e38a74"
+}
+
+
+###*
+POST http://localhost:12345/createEmployee
+Content-Type: application/json
+
+{
+    "nombre": "John",
+    "paterno": "Doe",
+    "materno": "Smith",
+    "area": "IT",
+    "puesto": "Developer",
+    "sucursal": "New York",
+    "nss": "123456789",
+    "rfc": "ABCD123456",
+    "curp": "ABCD123456",
+    "fechadenacimiento": "1990-01-01",
+    "sueldodiarioss": 100.50,
+    "sueldodiario": 150.50,
+    "sueldoquincenal": 3000.00,
+    "sueldomensual": 6000.00,
+    "fechadeingreso": "2020-01-01",
+    "banco": "Banco de México",
+    "cuenta": "checking",
+    "formadepago": "efectivo",
+    "numerodecuenta": "123456789",
+    "estadocivil": "soltero",
+    "numerodetelefono": "555-555-5555",
+    "correoelectronico": "johndoe@example.com"
+}
+###
+POST http://localhost:12345/createEmployee
+Content-Type: application/json
+
+{
+    "nombre": "Maria",
+    "paterno": "Gonzalez",
+    "materno": "Lopez",
+    "area": "Marketing",
+    "puesto": "Assistent",
+    "sucursal": "Mexico City",
+    "nss": "987654321",
+    "rfc": "EFGH098765",
+    "curp": "EFGH098765",
+    "fechadenacimiento": "1995-05-05",
+    "sueldodiarioss": 80.00,
+    "sueldodiario": 120.00,
+    "sueldoquincenal": 2400.00,
+    "sueldomensual": 4800.00,
+    "fechadeingreso": "2022-05-01",
+    "banco": "Banco Santander",
+    "cuenta": "savings",
+    "formadepago": "transferencia",
+    "numerodecuenta": "0987654321",
+    "estadocivil": "casado",
+    "numerodetelefono": "555-555-5555",
+    "correoelectronico": "mariaglopez@example.com"
+}
+###*
+GET http://localhost:12345/getEmployees
+Content-Type: application/json

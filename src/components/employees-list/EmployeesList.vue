@@ -32,14 +32,18 @@
 
     <v-data-table
       :headers="headers"
-      :items="users"
+      :items="getUserList"
       :items-per-page="5"
       class="elevation-1"
-    ></v-data-table>
+      @click:row="goToEmployee"
+    >
+    </v-data-table>
   </v-container>
 </template>
 
 <script>
+  import axios from 'axios';
+  import { mapActions } from 'vuex';
   import ConvertExcelToJson from './ConvertExcelToJson.vue';
   import CreateUserForm from './CreateUserForm.vue';
   export default {
@@ -65,19 +69,19 @@
           { text: 'NSS', value: 'nss' },
           { text: 'RFC', value: 'rfc' },
           { text: 'CURP', value: 'curp' },
-          { text: 'Fecha de nacimiento', value: 'fechaDeNacimiento' },
-          { text: 'Sueldo diario SS', value: 'sueldoDiarioSs' },
-          { text: 'Sueldo diario', value: 'sueldoDiario' },
-          { text: 'Sueldo quincenal', value: 'sueldoQuincenal' },
-          { text: 'Sueldo mensual', value: 'sueldoMensual' },
-          { text: 'Fecha de ingreso', value: 'fechaDeIngreso' },
+          { text: 'Fecha de nacimiento', value: 'fechadenacimiento' },
+          { text: 'Sueldo diario SS', value: 'sueldodiarioss' },
+          { text: 'Sueldo diario', value: 'sueldodiario' },
+          { text: 'Sueldo quincenal', value: 'sueldoquincenal' },
+          { text: 'Sueldo mensual', value: 'sueldomensual' },
+          { text: 'Fecha de ingreso', value: 'fechadeingreso' },
           { text: 'Banco', value: 'banco' },
           { text: 'Cuenta', value: 'cuenta' },
-          { text: 'Forma de pago', value: 'formaDePago' },
-          { text: 'Numero de cuenta', value: 'numeroDeCuenta' },
-          { text: 'Estado civil', value: 'estadoCivil' },
-          { text: 'Numero de teléfono', value: 'numeroDeTelefono' },
-          { text: 'Correo electrónico', value: 'correoElectronico' }
+          { text: 'Forma de pago', value: 'formadepago' },
+          { text: 'Numero de cuenta', value: 'numerodecuenta' },
+          { text: 'Estado civil', value: 'estadocivil' },
+          { text: 'Numero de teléfono', value: 'numerodetelefono' },
+          { text: 'Correo electrónico', value: 'correoelectronico' }
         ],
         users: this.tempUser
       }
@@ -95,14 +99,46 @@
       closeDialog() {
         this.dialogOpen = false;
       },
-      getJSONFromExcel(jsonData) {
-        console.log(jsonData)
-        this.tempUser = jsonData;
+      getJSONFromExcel(employeesData) {
+        console.log(employeesData);
+        // this.tempUser = jsonData;
+        employeesData.forEach(employee => {
+          console.log(employee)
+          axios.post('http://localhost:12345/createEmployee', employee)
+            .then(response => {
+              console.log(response.data);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        });
+      },
+      ...mapActions(['goToEmployee']),
+      goToEmployee(employee){
+        console.log(employee._id)
+        //this.goToEmployee(employee.id)
+        this.$router.push({ name: 'employeeDetails', params: { id: employee._id } })
       }
     },
     components: {
       ConvertExcelToJson,
       CreateUserForm
+    },
+    mounted() {
+      axios.get('http://localhost:12345/getEmployees')
+        .then(response => {
+          console.log(response.data);
+          this.tempUser = response.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    computed: {
+      getUserList() {
+        console.log('hello');
+        return this.tempUser
+      }
     }
   }
 

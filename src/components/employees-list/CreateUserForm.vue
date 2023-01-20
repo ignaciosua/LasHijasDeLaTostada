@@ -7,31 +7,31 @@
     <v-card-text>
       <form>
         <v-text-field
-          v-model="name"
+          v-model="nombre"
           :error-messages="nameErrors"
           :counter="10"
           label="Name"
           required
-          @input="$v.name.$touch()"
-          @blur="$v.name.$touch()"
+          @input="$v.nombre.$touch()"
+          @blur="$v.nombre.$touch()"
         ></v-text-field>
         <v-text-field
-          v-model="surname"
+          v-model="paterno"
           :error-messages="surnameErrors"
           :counter="10"
           label="Surname"
           required
-          @input="$v.surname.$touch()"
-          @blur="$v.surname.$touch()"
+          @input="$v.paterno.$touch()"
+          @blur="$v.paterno.$touch()"
         ></v-text-field>
         <v-text-field
-          v-model="secondSurname"
+          v-model="materno"
           :error-messages="secondSurnameErrors"
           :counter="10"
           label="Second Surname"
           required
-          @input="$v.secondSurname.$touch()"
-          @blur="$v.secondSurname.$touch()"
+          @input="$v.materno.$touch()"
+          @blur="$v.materno.$touch()"
         ></v-text-field>
         <v-select 
           v-model="area"
@@ -43,22 +43,22 @@
           @blur="$v.area.$touch()"
         ></v-select>
         <v-select 
-          v-model="position"
+          v-model="puesto"
           :items="positions"
           :error-messages="positionErrors"
           label="Position"
           required
-          @change="$v.position.$touch()"
-          @blur="$v.position.$touch()"
+          @change="$v.puesto.$touch()"
+          @blur="$v.puesto.$touch()"
         ></v-select>
         <v-select 
-          v-model="branch"
+          v-model="sucursal"
           :items="branches"
           :error-messages="branchErrors"
           label="Branch"
           required
-          @change="$v.branch.$touch()"
-          @blur="$v.branch.$touch()"
+          @change="$v.sucursal.$touch()"
+          @blur="$v.sucursal.$touch()"
         ></v-select>
         <v-text-field
           v-model="nss"
@@ -88,26 +88,26 @@
           ref="birthdateMenu"
           v-model="birthdateMenu"
           :close-on-content-click="false"
-          :return-value.sync="birthdate"
+          :return-value.sync="fechadenacimiento"
           transition="scale-transition"
           offset-y
           min-width="auto"
         >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
-              v-model="birthdate"
+              v-model="fechadenacimiento"
               :error-messages="birthdateErrors"
               label="Birthdate"
               prepend-icon="mdi-calendar"
               required
-              @input="$v.birthdate.$touch()"
-              @blur="$v.birthdate.$touch()"
+              @input="$v.fechadenacimiento.$touch()"
+              @blur="$v.fechadenacimiento.$touch()"
               v-bind="attrs"
               v-on="on"
             ></v-text-field>
           </template>
           <v-date-picker
-            v-model="birthdate"
+            v-model="fechadenacimiento"
             no-title
             scrollable
           >
@@ -129,53 +129,53 @@
           </v-date-picker>
         </v-menu>
         <v-text-field
-          v-model="dailySalary"
+          v-model="sueldodiario"
           :error-messages="dailySalaryErrors"
           label="Daily Salary"
           required
-          @input="$v.dailySalary.$touch()"
-          @blur="$v.dailySalary.$touch()"
+          @input="$v.sueldodiario.$touch()"
+          @blur="$v.sueldodiario.$touch()"
         ></v-text-field>
         <v-text-field
-          v-model="biweeklySalary"
+          v-model="sueldoquincenal"
           :error-messages="biweeklySalaryErrors"
           label="Biweekly Salary"
           required
-          @input="$v.biweeklySalary.$touch()"
-          @blur="$v.biweeklySalary.$touch()"
+          @input="$v.sueldoquincenal.$touch()"
+          @blur="$v.sueldoquincenal.$touch()"
         ></v-text-field>
         <v-text-field
-          v-model="monthlySalary"
+          v-model="sueldomensual"
           :error-messages="monthlySalaryErrors"
           label="Monthly Salary"
           required
-          @input="$v.monthlySalary.$touch()"
-          @blur="$v.monthlySalary.$touch()"
+          @input="$v.sueldomensual.$touch()"
+          @blur="$v.sueldomensual.$touch()"
         ></v-text-field>
         <v-menu
           ref="hireDateMenu"
           v-model="hireDateMenu"
           :close-on-content-click="false"
-          :return-value.sync="hireDate"
+          :return-value.sync="fechadeingreso"
           transition="scale-transition"
           offset-y
           min-width="auto"
         >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
-              v-model="hireDate"
+              v-model="fechadeingreso"
               :error-messages="hireDateErrors"
               label="Hire Date"
               prepend-icon="mdi-calendar"
               required
-              @input="$v.hireDate.$touch()"
-              @blur="$v.hireDate.$touch()"
+              @input="$v.fechadeingreso.$touch()"
+              @blur="$v.fechadeingreso.$touch()"
               v-bind="attrs"
               v-on="on"
             ></v-text-field>
           </template>
           <v-date-picker
-            v-model="hireDate"
+            v-model="fechadeingreso"
             no-title
             scrollable
           >
@@ -197,59 +197,59 @@
           </v-date-picker>
         </v-menu>
         <v-text-field
-          v-model="bank"
+          v-model="banco"
           :error-messages="bankErrors"
           label="Bank"
           required
-          @input="$v.bank.$touch()"
-          @blur="$v.bank.$touch()"
+          @input="$v.banco.$touch()"
+          @blur="$v.banco.$touch()"
         ></v-text-field>
         <v-text-field
-          v-model="bankAccount"
+          v-model="cuenta"
           :error-messages="bankAccountErrors"
           label="Bank Account"
           required
-          @input="$v.bankAccount.$touch()"
-          @blur="$v.bankAccount.$touch()"
+          @input="$v.cuenta.$touch()"
+          @blur="$v.cuenta.$touch()"
         ></v-text-field>
         <v-text-field
-          v-model="paymentMethod"
+          v-model="formadepago"
           :error-messages="paymentMethodErrors"
           label="Payment Method"
           required
-          @input="$v.paymentMethod.$touch()"
-          @blur="$v.paymentMethod.$touch()"
+          @input="$v.formadepago.$touch()"
+          @blur="$v.formadepago.$touch()"
         ></v-text-field>
         <v-text-field
-          v-model="accountNumber"
+          v-model="numerodecuenta"
           :error-messages="accountNumberErrors"
           label="Account Number"
           required
-          @input="$v.accountNumber.$touch()"
-          @blur="$v.accountNumber.$touch()"
+          @input="$v.numerodecuenta.$touch()"
+          @blur="$v.numerodecuenta.$touch()"
         ></v-text-field>
         <v-select 
-          v-model="maritalStatus"
+          v-model="estadocivil"
           :items="maritalStatuses"
           :error-messages="maritalStatusErrors"
           required
           label="Marital Status"
         ></v-select>
         <v-text-field
-          v-model="phoneNumber"
+          v-model="numerodetelefono"
           :error-messages="phoneNumberErrors"
           label="Phone Number"
           required
-          @input="$v.phoneNumber.$touch()"
-          @blur="$v.phoneNumber.$touch()"
+          @input="$v.numerodetelefono.$touch()"
+          @blur="$v.numerodetelefono.$touch()"
         ></v-text-field>
         <v-text-field
-          v-model="email"
+          v-model="correoelectronico"
           :error-messages="emailErrors"
           label="E-mail"
           required
-          @input="$v.email.$touch()"
-          @blur="$v.email.$touch()"
+          @input="$v.correoelectronico.$touch()"
+          @blur="$v.correoelectronico.$touch()"
         ></v-text-field>
       </form>
     </v-card-text>
@@ -272,6 +272,7 @@
 </template>
 
 <script>
+  import axios from 'axios';
   import { validationMixin } from 'vuelidate'
   import { required, maxLength, email } from 'vuelidate/lib/validators'
 
@@ -279,51 +280,51 @@
     mixins: [validationMixin],
 
     validations: {
-      name: { required },
-      surname: { required },
-      secondSurname: { required },
+      nombre: { required },
+      paterno: { required },
+      materno: { required },
       area: { required },
-      position: { required },
-      branch: { required },
+      puesto: { required },
+      sucursal: { required },
       nss: { required, maxLength: maxLength(11) },
       rfc: { required, maxLength: maxLength(13) },
       curp: { required, maxLength: maxLength(18) },
-      birthdate: { required },
-      dailySalary: { required },
-      biweeklySalary: { required },
-      monthlySalary: { required },
-      hireDate: { required },
-      bank: { required },
-      bankAccount: { required },
-      paymentMethod: { required },
-      accountNumber: { required },
-      maritalStatus: { required },
-      phoneNumber: { required },
-      email: { required, email }
+      fechadenacimiento: { required },
+      sueldodiario: { required },
+      sueldoquincenal: { required },
+      sueldomensual: { required },
+      fechadeingreso: { required },
+      banco: { required },
+      cuenta: { required },
+      formadepago: { required },
+      numerodecuenta: { required },
+      estadocivil: { required },
+      numerodetelefono: { required },
+      correoelectronico: { required, email }
     },
 
     data: () => ({
-      name: '',
-      surname: '',
-      secondSurname: '',
+      nombre: '',
+      paterno: '',
+      materno: '',
       area: '',
-      position: '',
-      branch: '',
+      puesto: '',
+      sucursal: '',
       nss: '',
       rfc: '',
       curp: '',
-      birthdate: '',
-      dailySalary: '',
-      biweeklySalary: '',
-      monthlySalary: '',
-      hireDate: '',
-      bank: '',
-      bankAccount: '',
-      paymentMethod: '',
-      accountNumber: '',
-      maritalStatus: '',
-      phoneNumber: '',
-      email: '',
+      fechadenacimiento: '',
+      sueldodiario: '',
+      sueldoquincenal: '',
+      sueldomensual: '',
+      fechadeingreso: '',
+      banco: '',
+      cuenta: '',
+      formadepago: '',
+      numerodecuenta: '',
+      estadocivil: '',
+      numerodetelefono: '',
+      correoelectronico: '',
       areas: ['Piso', 'Cocina'],
       positions: ['Mesero', 'Cocinero'],
       branches: ['Calles 38', 'Quinta'],
@@ -336,20 +337,20 @@
     computed: {
       nameErrors () {
         const errors = []
-        if (!this.$v.name.$dirty) return errors
-        !this.$v.name.required && errors.push('Name is required.')
+        if (!this.$v.nombre.$dirty) return errors
+        !this.$v.nombre.required && errors.push('Name is required.')
         return errors
       },
       surnameErrors () {
         const errors = []
-        if (!this.$v.surname.$dirty) return errors
-        !this.$v.surname.required && errors.push('Surname is required.')
+        if (!this.$v.paterno.$dirty) return errors
+        !this.$v.paterno.required && errors.push('Surname is required.')
         return errors
       },
       secondSurnameErrors () {
         const errors = []
-        if (!this.$v.secondSurname.$dirty) return errors
-        !this.$v.secondSurname.required && errors.push('Second surname is required.')
+        if (!this.$v.materno.$dirty) return errors
+        !this.$v.materno.required && errors.push('Second paterno is required.')
         return errors
       },
       areaErrors () {
@@ -360,14 +361,14 @@
       },
       positionErrors () {
         const errors = []
-        if (!this.$v.position.$dirty) return errors
-        !this.$v.position.required && errors.push('Position is required.')
+        if (!this.$v.puesto.$dirty) return errors
+        !this.$v.puesto.required && errors.push('Position is required.')
         return errors
       },
       branchErrors () {
         const errors = []
-        if (!this.$v.branch.$dirty) return errors
-        !this.$v.branch.required && errors.push('Branch is required.')
+        if (!this.$v.sucursal.$dirty) return errors
+        !this.$v.sucursal.required && errors.push('Branch is required.')
         return errors
       },
       nssErrors () {
@@ -393,87 +394,121 @@
       },
       birthdateErrors () {
         const errors = []
-        if (!this.$v.birthdate.$dirty) return errors
-        !this.$v.birthdate.required && errors.push('Birthdate is required.')
+        if (!this.$v.fechadenacimiento.$dirty) return errors
+        !this.$v.fechadenacimiento.required && errors.push('Birthdate is required.')
         return errors
       },
       dailySalaryErrors () {
         const errors = []
-        if (!this.$v.dailySalary.$dirty) return errors
-        !this.$v.dailySalary.required && errors.push('Daily salary is required.')
+        if (!this.$v.sueldodiario.$dirty) return errors
+        !this.$v.sueldodiario.required && errors.push('Daily salary is required.')
         return errors
       },
       biweeklySalaryErrors () {
         const errors = []
-        if (!this.$v.biweeklySalary.$dirty) return errors
-        !this.$v.biweeklySalary.required && errors.push('Biweekly salary is required.')
+        if (!this.$v.sueldoquincenal.$dirty) return errors
+        !this.$v.sueldoquincenal.required && errors.push('Biweekly salary is required.')
         return errors
       },
       monthlySalaryErrors () {
         const errors = []
-        if (!this.$v.monthlySalary.$dirty) return errors
-        !this.$v.monthlySalary.required && errors.push('Monthly salary is required.')
+        if (!this.$v.sueldomensual.$dirty) return errors
+        !this.$v.sueldomensual.required && errors.push('Monthly salary is required.')
         return errors
       },
       hireDateErrors () {
         const errors = []
-        if (!this.$v.hireDate.$dirty) return errors
-        !this.$v.hireDate.required && errors.push('Hire date is required.')
+        if (!this.$v.fechadeingreso.$dirty) return errors
+        !this.$v.fechadeingreso.required && errors.push('Hire date is required.')
         return errors
       },
       bankErrors () {
         const errors = []
-        if (!this.$v.bank.$dirty) return errors
-        !this.$v.bank.required && errors.push('Bank is required.')
+        if (!this.$v.banco.$dirty) return errors
+        !this.$v.banco.required && errors.push('Bank is required.')
         return errors
       },
       bankAccountErrors () {
         const errors = []
-        if (!this.$v.bankAccount.$dirty) return errors
-        !this.$v.bankAccount.required && errors.push('Bank account is required')
+        if (!this.$v.cuenta.$dirty) return errors
+        !this.$v.cuenta.required && errors.push('Bank account is required')
         return errors
       },
       paymentMethodErrors () {
         const errors = []
-        if (!this.$v.paymentMethod.$dirty) return errors
-        !this.$v.paymentMethod.required && errors.push('Payment method is required')
+        if (!this.$v.formadepago.$dirty) return errors
+        !this.$v.formadepago.required && errors.push('Payment method is required')
         return errors
       },
       accountNumberErrors () {
         const errors = []
-        if (!this.$v.accountNumber.$dirty) return errors
-        !this.$v.accountNumber.required && errors.push('Account number is required')
+        if (!this.$v.numerodecuenta.$dirty) return errors
+        !this.$v.numerodecuenta.required && errors.push('Account number is required')
         return errors
       },
       maritalStatusErrors () {
         const errors = []
-        if (!this.$v.maritalStatus.$dirty) return errors
-        !this.$v.maritalStatus.required && errors.push('Marital status is required')
+        if (!this.$v.estadocivil.$dirty) return errors
+        !this.$v.estadocivil.required && errors.push('Marital status is required')
         return errors
       },
       phoneNumberErrors () {
         const errors = []
-        if (!this.$v.phoneNumber.$dirty) return errors
-        !this.$v.phoneNumber.required && errors.push('Phone number is required')
+        if (!this.$v.numerodetelefono.$dirty) return errors
+        !this.$v.numerodetelefono.required && errors.push('Phone number is required')
         return errors
       },
       emailErrors () {
         const errors = []
-        if (!this.$v.email.$dirty) return errors
-        !this.$v.email.email && errors.push('Must be valid e-mail')
-        !this.$v.email.required && errors.push('E-mail is required')
+        if (!this.$v.correoelectronico.$dirty) return errors
+        !this.$v.correoelectronico.email && errors.push('Must be valid e-mail')
+        !this.$v.correoelectronico.required && errors.push('E-mail is required')
         return errors
       },
     },
 
     methods: {
+      prepareNewEmployeeInfo () {
+        return {
+          nombre: this.nombre,
+          paterno: this.paterno,
+          materno: this.materno,
+          area: this.area,
+          puesto: this.puesto,
+          sucursal: this.sucursal,
+          nss: this.nss,
+          rfc: this.rfc,
+          curp: this.curp,
+          fechadenacimiento: this.fechadenacimiento,
+          sueldodiario: this.sueldodiario,
+          sueldoquincenal: this.sueldoquincenal,
+          sueldomensual: this.sueldomensual,
+          fechadeingreso: this.fechadeingreso,
+          banco: this.banco,
+          cuenta: this.cuenta,
+          formadepago: this.formadepago,
+          numerodecuenta: this.numerodecuenta,
+          estadocivil: this.estadocivil,
+          numerodetelefono: this.numerodetelefono,
+          correoelectronico: this.correoelectronico
+        }
+      },
       submit () {
+        const newEmployeeInfo = this.prepareNewEmployeeInfo();
+        console.log(newEmployeeInfo);
+        axios.post('http://localhost:12345/createEmployee', newEmployeeInfo)
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
         this.$v.$touch()
       },
       clear () {
         this.$v.$reset()
-        this.name = ''
-        this.email = ''
+        this.nombre = ''
+        this.correoelectronico = ''
       },
     },
   }
