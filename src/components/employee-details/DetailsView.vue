@@ -18,11 +18,10 @@
                 :key="index"
               >
                 <v-text-field
-                  :value="field.value"
                   :label="field.label"
-                  @blur="() => editField(field.value)"
-                  v-model="field.value"
-                  v-on:focus="removeReadOnly(field.value)" 
+                  @blur="() => editField(employee[field.name])"
+                  v-model="employee[field.name]"
+                  v-on:focus="removeReadOnly(field.name)" 
                   filled
                   :readonly="isReadOnly"
                   dense
@@ -41,121 +40,88 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      employee: {},
       isReadOnly: true,
       focusedInput: '',
-      informationFields: {
-        name: {
-          value: 'John',
-          label: 'Name'
-        },
-        surName: {
-          value: 'Doe',
-          label: 'Surname'
-        },
-        secondSurname: {
-          value: 'Johnson',
-          label: 'Second surname'
-        },
-        area: {
-          value: 'Area value',
-          label: 'Area'
-        },
-        position: {
-          value: 'Position value',
-          label: 'Position'
-        },
-        branch: {
-          value: 'Branch value',
-          label: 'Branch'
-        },
-        nss: {
-          value: 'NSS value',
-          label: 'NSS'
-        },
-        rfc: {
-          value: 'RFC value',
-          label: 'RFC'
-        },
-        curp: {
-          value: 'CURP value',
-          label: 'CURP'
-        },
-        birthdate: {
-          value: 'Birthdate value',
-          label: 'Birthdate'
-        },
-        dailySalarySs: {
-          value: 'Daily salary ss value',
-          label: 'Daily Salary SS'
-        },
-        dailySalary: {
-          value: 'Daily Salary value',
-          label: 'Daily Salary'
-        },
-        biweeklySalary: {
-          value: 'BiWeekly Salary value',
-          label: 'Biweekly Salary'
-        },
-        monthlySalary: {
-          value: 'Monthly Salary value',
-          label: 'Monthly Salary'
-        },
-        hireDate: {
-          value: 'Hire Date value',
-          label: 'Hire Date'
-        },
-        bank: {
-          value: 'John',
-          label: 'Bank'
-        },
-        banckAccount: {
-          value: 'John',
-          label: 'Bank Account'
-        },
-        paymentMethod: {
-          value: 'John',
-          label: 'Payment Method'
-        },
-        accountNumber: {
-          value: 'John',
-          label: 'Account Number'
-        },
-        maritalStatus: {
-          value: 'John',
-          label: 'Marital Status'
-        },
-        phoneNumber: {
-          value: 'John',
-          label: 'Phone Number'
-        },
-        email: {
-          value: 'John',
-          label: 'E-mail'
-        },
-      }
+      informationFields: [
+        { label: 'Name', name: 'nombre' },
+        { label: 'Surname', name: 'paterno' },
+        { label: 'Second surname', name: 'materno' },
+        { label: 'Area', name: 'area' },
+        { label: 'Position', name: 'puesto' },
+        { label: 'Branch', name: 'sucursal' },
+        { label: 'NSS', name: 'nss' },
+        { label: 'RFC', name: 'rfc' },
+        { label: 'CURP', name: 'curp' },
+        { label: 'Birthdate', name: 'fechadenacimiento' },
+        { label: 'Daily Salary SS', name: 'sueldodiarioss' },
+        { label: 'Daily Salary', name: 'sueldodiario' },
+        { label: 'Biweekly Salary', name: 'sueldoquincenal' },
+        { label: 'Monthly Salary', name: 'sueldomensual' },
+        { label: 'Hire Date', name: 'fechadeingreso' },
+        { label: 'Bank', name: 'banco' },
+        { label: 'Bank Account', name: 'cuenta' },
+        { label: 'Payment Method', name: 'formadepago' },
+        { label: 'Account Number', name: 'numerodecuenta' },
+        { label: 'Marital Status', name: 'estadocivil' },
+        { label: 'Phone Number', name: 'numerodetelefono' },
+        { label: 'E-mail', name: 'correoelectronico' }
+      ]
     }
   },
   methods: {
-    editField(value) {
-      console.log('this is the new value: ', value)
+    editField() {
+      console.log(this.employee);
+      axios.post('http://localhost:12345/updateEmployee', this.employee)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
     },
     removeReadOnly(input) {
-      console.log(this.focusedInput, input)
+      console.log(input)
       if (this.focusedInput === input) return;
       this.focusedInput = input;
       this.isReadOnly = false;
     }
   },
-  mounted() {
+  created() {
     console.log(this.$route.params.id);
-    axios.get(`http://localhost:12345/getEmployee/${this.$route.params.id}`)
+    /* axios.get(`http://localhost:12345/getEmployee/${this.$route.params.id}`)
       .then(response => {
         console.log(response.data);
-        this.tempUser = response.data;
+        this.employee = response.data;
       })
       .catch(error => {
         console.log(error);
-      });
+      }); */
+    this.employee = {
+      "_id": "63c7380c87759ea59d0f7ef1",
+      "nombre": "MAriano",
+      "paterno": "Doe",
+      "materno": "Smith",
+      "area": "IT",
+      "puesto": "Developer",
+      "sucursal": "New York",
+      "nss": "123456789",
+      "rfc": "ABCD123456",
+      "curp": "ABCD123456",
+      "fechadenacimiento": "1990-01-01",
+      "sueldodiarioss": 100.50,
+      "sueldodiario": 150.50,
+      "sueldoquincenal": 3000.00,
+      "sueldomensual": 6000.00,
+      "fechadeingreso": "2020-01-01",
+      "banco": "Banco de México",
+      "cuenta": "checking",
+      "formadepago": "efectivo",
+      "numerodecuenta": "123456789",
+      "estadocivil": "soltero",
+      "numerodetelefono": "555-555-5555",
+      "correoelectronico": "johndoe@example.com"
+    };
   },
 }
 </script>

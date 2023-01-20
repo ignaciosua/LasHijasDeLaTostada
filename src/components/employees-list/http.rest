@@ -6,22 +6,22 @@ GET http://localhost:12345/getEmployee/63c9c6a70548b4af9a5edf12
 POST http://localhost:12345/updateEmployee
 Content-Type: application/json
 
- {
+{
     "_id": "63c7380c87759ea59d0f7ef1",
     "nombre": "MAriano",
     "paterno": "Doe",
     "materno": "Smith",
     "area": "IT",
-    "puesto": "Developer",
-    "sucursal": "New York",
+    "puesto": "Developersasas",
+    "sucursal": "New Yorkdsds",
     "nss": "123456789",
     "rfc": "ABCD123456",
     "curp": "ABCD123456",
     "fechadenacimiento": "1990-01-01",
-    "sueldodiarioss": 100.50,
-    "sueldodiario": 150.50,
-    "sueldoquincenal": 3000.00,
-    "sueldomensual": 6000.00,
+    "sueldodiarioss": 100.5,
+    "sueldodiario": 150.5,
+    "sueldoquincenal": 3000,
+    "sueldomensual": 6000,
     "fechadeingreso": "2020-01-01",
     "banco": "Banco de México",
     "cuenta": "checking",
@@ -29,7 +29,8 @@ Content-Type: application/json
     "numerodecuenta": "123456789",
     "estadocivil": "soltero",
     "numerodetelefono": "555-555-5555",
-    "correoelectronico": "johndoe@example.com"
+    "correoelectronico": "johndoe@example.com",
+    "newValue": "Developersasas"
 }
 
 ###
