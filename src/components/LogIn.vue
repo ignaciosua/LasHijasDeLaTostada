@@ -43,6 +43,7 @@
 </template>
 
 <script>
+ import axios from  'axios'
   export default {
     data: () => ({
       show: false,
@@ -61,6 +62,17 @@
     methods: {
       validate () {
         this.$refs.form.validate()
+        if (this.valid) {
+          axios.post('http://localhost:12345/login', { 'username': this.email, 'password': this.password})
+          .then(response => {
+            axios.defaults.headers.common['Authorization'] = `Basic ${response.data}`;
+            localStorage.setItem('auth', response.data)
+            // document.cookie =  response.data
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        }
       },
       reset () {
         this.$refs.form.reset()

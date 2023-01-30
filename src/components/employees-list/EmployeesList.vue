@@ -125,7 +125,7 @@
       CreateUserForm
     },
     mounted() {
-      axios.get('http://localhost:12345/getEmployees')
+      axios.get('http://localhost:12345/getEmployees',  { headers: {'Authorization' : localStorage.getItem('auth')}})
         .then(response => {
           console.log(response.data);
           this.tempUser = response.data;
