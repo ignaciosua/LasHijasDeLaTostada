@@ -5,7 +5,11 @@
     </v-card-title>
 
     <v-card-text>
-      <form>
+      <v-form
+        ref="form"
+        v-model="valid"
+        lazy-validation
+      >
         <v-text-field
           v-model="nombre"
           :error-messages="nameErrors"
@@ -122,7 +126,7 @@
             <v-btn
               text
               color="primary"
-              @click="$refs.birthdateMenu.save(date)"
+              @click="$refs.birthdateMenu.save(fechadenacimiento)"
             >
               OK
             </v-btn>
@@ -133,24 +137,37 @@
           :error-messages="dailySalaryErrors"
           label="Daily Salary"
           required
-          @input="$v.sueldodiario.$touch()"
+          @input="calculateSalaries"
           @blur="$v.sueldodiario.$touch()"
+          type="number"
+          :prefix="'$'"
+        ></v-text-field>
+        <v-text-field
+          v-model="sueldodiarioss"
+          label="Daily Salary SS"
+          required
+          @input="calculateSalaries"
+          @blur="$v.sueldodiarioss.$touch()"
+          type="number"
+          :prefix="'$'"
         ></v-text-field>
         <v-text-field
           v-model="sueldoquincenal"
-          :error-messages="biweeklySalaryErrors"
           label="Biweekly Salary"
           required
           @input="$v.sueldoquincenal.$touch()"
           @blur="$v.sueldoquincenal.$touch()"
+          type="number"
+          :prefix="'$'"
         ></v-text-field>
         <v-text-field
           v-model="sueldomensual"
-          :error-messages="monthlySalaryErrors"
           label="Monthly Salary"
           required
           @input="$v.sueldomensual.$touch()"
           @blur="$v.sueldomensual.$touch()"
+          type="number"
+          :prefix="'$'"
         ></v-text-field>
         <v-menu
           ref="hireDateMenu"
@@ -190,7 +207,7 @@
             <v-btn
               text
               color="primary"
-              @click="$refs.hireDateMenu.save(date)"
+              @click="$refs.hireDateMenu.save(fechadeingreso)"
             >
               OK
             </v-btn>
@@ -251,7 +268,7 @@
           @input="$v.correoelectronico.$touch()"
           @blur="$v.correoelectronico.$touch()"
         ></v-text-field>
-      </form>
+      </v-form>
     </v-card-text>
 
     <v-divider></v-divider>
@@ -259,12 +276,14 @@
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn
+        :disabled="!valid"
+        color="success"
         class="mr-4"
         @click="submit"
       >
         submit
       </v-btn>
-      <v-btn @click="clear">
+      <v-btn @click="clear" color="error">
         clear
       </v-btn>
     </v-card-actions>
@@ -272,9 +291,9 @@
 </template>
 
 <script>
-  import axios from 'axios';
   import { validationMixin } from 'vuelidate'
   import { required, maxLength, email } from 'vuelidate/lib/validators'
+  import minLength from 'vuelidate/lib/validators/minLength'
 
   export default {
     mixins: [validationMixin],
@@ -286,11 +305,12 @@
       area: { required },
       puesto: { required },
       sucursal: { required },
-      nss: { required, maxLength: maxLength(11) },
-      rfc: { required, maxLength: maxLength(13) },
-      curp: { required, maxLength: maxLength(18) },
+      nss: { required, maxLength: maxLength(11), minLength: minLength(11) },
+      rfc: { required, maxLength: maxLength(13), minLength: minLength(13) },
+      curp: { required, maxLength: maxLength(18), minLength: minLength(18) },
       fechadenacimiento: { required },
       sueldodiario: { required },
+      sueldodiarioss: { required },
       sueldoquincenal: { required },
       sueldomensual: { required },
       fechadeingreso: { required },
@@ -314,9 +334,10 @@
       rfc: '',
       curp: '',
       fechadenacimiento: '',
-      sueldodiario: '',
-      sueldoquincenal: '',
-      sueldomensual: '',
+      sueldodiario: 0,
+      sueldodiarioss: 0,
+      sueldoquincenal: 0,
+      sueldomensual: 0,
       fechadeingreso: '',
       banco: '',
       cuenta: '',
@@ -331,7 +352,8 @@
       date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       birthdateMenu: false,
       hireDateMenu: false,
-      maritalStatuses: ['Married', 'Divorce']
+      maritalStatuses: ['Married', 'Divorce'],
+      valid: true,
     }),
 
     computed: {
@@ -375,6 +397,7 @@
         const errors = []
         if (!this.$v.nss.$dirty) return errors
         !this.$v.nss.maxLength && errors.push('NSS must 11 characters long')
+        !this.$v.nss.minLength && errors.push('NSS must 11 characters long')
         !this.$v.nss.required && errors.push('NSS is required.')
         return errors
       },
@@ -382,6 +405,7 @@
         const errors = []
         if (!this.$v.rfc.$dirty) return errors
         !this.$v.rfc.maxLength && errors.push('RFC must 13 characters long')
+        !this.$v.rfc.minLength && errors.push('RFC must 13 characters long')
         !this.$v.rfc.required && errors.push('RFC is required.')
         return errors
       },
@@ -389,6 +413,7 @@
         const errors = []
         if (!this.$v.curp.$dirty) return errors
         !this.$v.curp.maxLength && errors.push('CURP must 18 characters long')
+        !this.$v.curp.minLength && errors.push('CURP must 18 characters long')
         !this.$v.curp.required && errors.push('CURP is required.')
         return errors
       },
@@ -402,18 +427,6 @@
         const errors = []
         if (!this.$v.sueldodiario.$dirty) return errors
         !this.$v.sueldodiario.required && errors.push('Daily salary is required.')
-        return errors
-      },
-      biweeklySalaryErrors () {
-        const errors = []
-        if (!this.$v.sueldoquincenal.$dirty) return errors
-        !this.$v.sueldoquincenal.required && errors.push('Biweekly salary is required.')
-        return errors
-      },
-      monthlySalaryErrors () {
-        const errors = []
-        if (!this.$v.sueldomensual.$dirty) return errors
-        !this.$v.sueldomensual.required && errors.push('Monthly salary is required.')
         return errors
       },
       hireDateErrors () {
@@ -468,6 +481,11 @@
     },
 
     methods: {
+      calculateSalaries() {
+        this.sueldodiarioss = this.sueldodiario;
+        this.sueldoquincenal = this.sueldodiario * 15
+        this.sueldomensual = this.sueldodiario * 30
+      },
       prepareNewEmployeeInfo () {
         return {
           nombre: this.nombre,
@@ -480,9 +498,10 @@
           rfc: this.rfc,
           curp: this.curp,
           fechadenacimiento: this.fechadenacimiento,
-          sueldodiario: this.sueldodiario,
-          sueldoquincenal: this.sueldoquincenal,
-          sueldomensual: this.sueldomensual,
+          sueldodiario: parseInt(this.sueldodiario),
+          sueldodiarioss: parseInt(this.sueldodiarioss),
+          sueldoquincenal: parseInt(this.sueldoquincenal),
+          sueldomensual: parseInt(this.sueldomensual),
           fechadeingreso: this.fechadeingreso,
           banco: this.banco,
           cuenta: this.cuenta,
@@ -494,21 +513,20 @@
         }
       },
       submit () {
+        this.loading = true;
+        this.$refs.form.validate()
         const newEmployeeInfo = this.prepareNewEmployeeInfo();
-        console.log(newEmployeeInfo);
-        axios.post('http://localhost:12345/createEmployee', newEmployeeInfo)
-          .then(response => {
-            console.log(response.data);
-          })
-          .catch(error => {
-            console.log(error);
-          });
-        this.$v.$touch()
+        //this.$emit('close-dialog');
+        this.$emit('custom-event', newEmployeeInfo);
+        this.$v.$touch()        
       },
       clear () {
         this.$v.$reset()
         this.nombre = ''
         this.correoelectronico = ''
+      },
+      reset () {
+        this.$refs.form.reset()
       },
     },
   }

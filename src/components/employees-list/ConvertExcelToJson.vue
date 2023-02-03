@@ -47,11 +47,25 @@ export default {
         const data = e.target.result;
         const workbook = XLSX.read(data, { type: "binary" });
         const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[1]]);
+
+        console.log(jsonData)
+
+        const jsonDataFormatted = jsonData.map(elem => {
+          elem.cuenta = String(elem.cuenta);
+          elem.fechadeingreso = String(this.convertExcelDate(elem.fechadeingreso));
+          elem.fechadenacimiento = String(this.convertExcelDate(elem.fechadenacimiento));
+          elem.numerodecuenta = String(elem.numerodecuenta);
+          elem.numerodetelefono = String(elem.numerodetelefono);
+          return elem;
+        });
         this.$emit('close-dialog');
-        this.$emit('custom-event', jsonData)
-        console.log(jsonData);
+        this.$emit('custom-event', jsonDataFormatted);
       };
       reader.readAsBinaryString(this.excelFile);
+    },
+    convertExcelDate(excelDate) {
+      const date = new Date((excelDate - (25567 + 1))*86400*1000).toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit', });
+      return date.split("/").join("-");
     }
   }
 }
